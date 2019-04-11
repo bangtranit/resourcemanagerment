@@ -5,29 +5,26 @@
 </head>
 <body >
 	
-	<div class="container">
+<!-- 	<div class="container">
 		<div class="row">
-			<div class="card-columns">
-			  <div class="card">
-			    <img class="card-img-top img-fluid" src="http://placehold.it/300x300" class="card-img-top" alt="...">
-			    <div class="card-body">
-			      <h5 class="card-title"> Tran Thanh Bang</h5>
-			      <p class="card-text old">Old: <strong>28</strong></p>
-			      <p class="card-text phone"> Phone: <strong>09082227722</strong></p>
-			      <p class="card-text number_order"> Number of order</p>
-			      <p class="card-text linkfb"><a href="linkfb" class="btn btn-secondary btn-xs">link in here <i class="fa fa-chevron-right"></i></a></p>
-			    </div>
-			  </div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="text-as-center">
-				<h6 class="display-4"> Add new</h6>
-			</div>
-		</div> 
-		<div class="container-fluig">
+				<div class="card-columns">
+					<?php foreach ($employees as $key => $value): ?>
+					  <div class="card">
+					    <img class="card-img-top img-fluid" src="<?php echo $value['avatar_image'] ?>" class="card-img-top" alt="...">
+					    <div class="card-body">
+					      <h5 class="card-title"> <?php echo $value['name'] ?></h5>
+					      <p class="card-text old">Old: <?php echo $value['old'] ?><strong>28</strong></p>
+					      <p class="card-text phone"> Phone: <strong><?php echo $value['phone'] ?></strong></p>
+					      <p class="card-text number_order"> Number of order <?php echo $value['number_of_order'] ?></p>
+					      <p class="card-text linkfb"><a href="<?php echo $value['fb_link'] ?>" class="btn btn-secondary btn-xs">link in here <i class="fa fa-chevron-right"></i></a></p>
+					    </div>
+					  </div>
+				  <?php endforeach ?>
+				</div>
+		</div> -->
+
+<!-- 		<div class="container-fluig">
 			<div class="row">
-				<!-- <form method="post" action="<? base_url();?>/index.php/Employees/add" enctype="multidata/form-data"> -->
 				<form method="post" action="Employees/add" enctype="multipart/form-data">
 
 					<div class="form-group row">
@@ -86,8 +83,166 @@
 					</div>
 				</form>
 			</div>
+		</div> -->
+<!-- 	</div>
+	<div class="container">
+				<div class="row">
+			<form>
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="inputEmail4">Email</label>
+			      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="inputPassword4">Password</label>
+			      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="inputAddress">Address</label>
+			    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+			  </div>
+			  <div class="form-group">
+			    <label for="inputAddress2">Address 2</label>
+			    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+			  </div>
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="inputCity">City</label>
+			      <input type="text" class="form-control" id="inputCity">
+			    </div>
+			    <div class="form-group col-md-4">
+			      <label for="inputState">State</label>
+			      <select id="inputState" class="form-control">
+			        <option selected>Choose...</option>
+			        <option>...</option>
+			      </select>
+			    </div>
+			    <div class="form-group col-md-2">
+			      <label for="inputZip">Zip</label>
+			      <input type="text" class="form-control" id="inputZip">
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <div class="form-check">
+			      <input class="form-check-input" type="checkbox" id="gridCheck">
+			      <label class="form-check-label" for="gridCheck">
+			        Check me out
+			      </label>
+			    </div>
+			  </div>
+			  <button type="submit" class="btn btn-primary">Sign in</button>
+			</form>
 		</div>
-		
+	</div> -->
+
+	<div class="container">
+		<div class="row">
+			<?php foreach ($employees as $key => $value): ?>
+				<div class="card-deck">
+				  <div class="card">
+				    <img class="card-img-top img-fluid" src="<?php echo $value['avatar_image'] ?>" style="width:320px;height:320px;" alt="Card image cap">
+				    <div class="card-body">
+				      <h5 class="card-title"><?php echo $value['name'] ?></h5>
+				      <p class="card-text">Old: <?php echo $value['old'] ?></p>
+				      <p class="card-text">Phone: <?php echo $value['phone'] ?></p>
+				      <p class="card-text">Number of order: <?php echo $value['number_of_order'] ?></p>
+				      <p class="card-text">Link FB<?php echo $value['fb_link'] ?></p>
+				      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+				      <a href="Employees/detail/<?= $value['id']?>">edit</a>
+				      <a href="Employees/delete/<?= $value["id"]?>">Delete</a>
+				      <!-- <a href="NumberPhoneController/detailNumberPhone/<?= $value['id'] ?>">Edit</a> -->
+				    </div>
+				  </div>
+				</div>
+			<?php endforeach ?>
+		</div>
 	</div>
-</body>
+	<div></div>
+
+	<div class="container">
+		<h3 class="text-center">Add new employee</h3>
+		<div class="row">
+			<!-- <form method="post" action="Employees/add" enctype="multipart/form-data"> -->
+			  <div class="form-group">
+			    <label for="formGroupExampleInput">Avatar</label>
+			    <input type="file" id='avatar' name ='avatar' class="form-control" id="formGroupExampleInput" placeholder="Avatar">
+			  </div>
+			  <div class="form-group">
+			    <label for="formGroupExampleInput2">Name</label>
+			    <input type="text" id='name' name='name' class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+			  </div>
+			  <div class="form-group">
+			    <label for="formGroupExampleInput">Old</label>
+			    <input type="text" id='old' name='old' class="form-control" id="formGroupExampleInput" placeholder="Example input">
+			  </div>
+			  <div class="form-group">
+			    <label for="formGroupExampleInput">phone</label>
+			    <input type="text" id='phone' name='phone' class="form-control" id="formGroupExampleInput" placeholder="Example input">
+			  </div>
+			  <div class="form-group">
+			    <label for="formGroupExampleInput">Number of order</label>
+			    <input type="text" id='number_of_order' name='number_of_order' class="form-control" id="formGroupExampleInput" placeholder="Example input">
+			  </div>
+			  <div class="form-group">
+			    <label for="formGroupExampleInput">Fb link</label>
+			    <input type="text" id='fb_link' name='fb_link' class="form-control" id="formGroupExampleInput" placeholder="Example input">
+			  </div>
+			  <button type="button" class="btn btn-primary submit_by_ajax">Submit</button>
+			<!-- </form> -->
+		</div>
+	</div>
+
+	<script>
+		$(".submit_by_ajax").click(function(event) {
+			$.ajax({
+				//xử lý add data
+			url: 'Employees/addByAjax',
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				name: $('#name').val(),
+				old: $('#old').val(),
+				phone: $('#phone').val(),
+				number_of_order: $('#number_of_order').val(),
+				fb_link: $('#fb_link').val(),
+				},
+			})
+			.done(function() {
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+				//add thêm form trên giao diên
+				// content = '<div class="card-deck">';
+				content = '<div class="card">';
+				content+= '<img class="card-img-top img-fluid" src="https://ae01.alicdn.com/kf/HTB1AbOAOXXXXXcfXFXXq6xXFXXXr/hot-girl-tutu-Rose-Leopard-Dot-Women-Bustier-Crop-Top-Sexy-Clubwear-Spaghetti-Strap-Camouflage-Bustiers.jpg_640x640.jpg" style="width:320px;height:320px;" alt="Card image cap">';
+				content+= '<div class="card-body">';
+				content+= '<h5 class="card-title">'+$('#name').val()+'</h5>';
+				content+= '<p class="card-text">Old: '+$('#old').val()+'</p>';
+				content+= '<p class="card-text">Phone: '+$('#phone').val()+'</p>';
+				content+= '<p class="card-text">Number of order:  </p>';
+				content+= '<p class="card-text">Link FB '+$('#fb_link').val()+'</p>';
+				content+= '<a href="Employees/detail/<?= $value['id']?>">edit</a>';
+				content+= '<a href="Employees/delete/<?= $value["id"]?>">Delete</a>';
+				content+= '<!-- <a href="NumberPhoneController/detailNumberPhone/<?= $value['id'] ?>">Edit</a> -->';
+				content+= '</div>';
+				content+= '</div>';
+				// content+= '</div>';
+				$('.card-deck').append(content);
+				$('#name').val('');
+				$('#old').val('');
+				$('#phone').val('');
+				$('#number_of_order').val('');
+				$('#fb_link').val('');
+			});
+			});
+		
+		
+	</script>
+
+	</body>
 </html>

@@ -12,7 +12,9 @@ class Employees extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('employee_list');
+		$this->load->model('Employee_model');
+		$data = array('employees' => $this->Employee_model->getall());
+		$this->load->view('employee_list', $data);
 	}
 
 	public function add()
@@ -22,7 +24,7 @@ class Employees extends CI_Controller {
 		$phone = $this->input->post('phone');
 		$number_of_order = $this->input->post('number_of_order');
 		$fb_link = $this->input->post('fb_link');
-		$avatar = $this->upload_file("avatar");
+		$avatar = $this->upload_file('avatar');
 
 		$this->load->model('Employee_model');
 		if ($this->Employee_model->add($avatar, $name, $old, $phone, $number_of_order, $fb_link)) {
@@ -31,7 +33,62 @@ class Employees extends CI_Controller {
 			echo "insert failed";
 		}
 	}
-	
+
+	public function addByAjax()
+	{
+		$name = $this->input->post('name');
+		$old = $this->input->post('old');
+		$phone = $this->input->post('phone');
+		$number_of_order = $this->input->post('number_of_order');
+		$fb_link = $this->input->post('fb_link');
+		$avatar = "https://ae01.alicdn.com/kf/HTB1AbOAOXXXXXcfXFXXq6xXFXXXr/hot-girl-tutu-Rose-Leopard-Dot-Women-Bustier-Crop-Top-Sexy-Clubwear-Spaghetti-Strap-Camouflage-Bustiers.jpg_640x640.jpg";
+
+		$this->load->model('Employee_model');
+		if ($this->Employee_model->add($avatar, $name, $old, $phone, $number_of_order, $fb_link)) {
+			$this->load->view("employee_insert_success");
+		}else{
+			echo "insert failed";
+		}
+	}
+
+	public function detail($id)
+	{
+		$this->load->model('Employee_model');
+		$data = array('data' => $this->Employee_model->getdetail($id));
+		$this->load->view('employee_detail', $data);
+	}
+
+	public function update()
+	{
+		$id = $this->input->post('id');
+		$name = $this->input->post('name');
+		$old = $this->input->post('old');
+		$phone = $this->input->post('phone');
+		$number_of_order = $this->input->post('number_of_order');
+		$fb_link = $this->input->post('fb_link');
+		$avatar = $this->upload_file('avatar');
+		if (!$avatar) {
+			$avatar = $this->input->post('avatar_2');
+		}
+		$this->load->model('Employee_model');
+		if ($this->Employee_model->update($id, $avatar, $name, $old, $phone, $number_of_order, $fb_link)) {
+			echo "ok";
+		}else{
+			echo "failed";
+		}
+	}
+
+	public function delete($id)
+	{
+		echo $id;
+		$this->load->model('Employee_model');
+		if ($this->Employee_model->delete($id)) {
+			echo "delete ok";
+		}else{
+			echo "error roi";
+		}
+	}
+
 	public function upload_file($key)
 	{
 		$target_dir = "file_upload/";
@@ -52,18 +109,18 @@ class Employees extends CI_Controller {
 
 		// Check file size
 		if ($_FILES[$key]["size"] > 500000) {
-		    echo "Sorry, your file is too large.";
+		    // echo "Sorry, your file is too large.";
 		    $uploadOk = 0;
 		}
 		// Allow certain file formats
 		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 		&& $imageFileType != "gif" ) {
-		    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+		    // echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
 		    $uploadOk = 0;
 		}
 		// Check if $uploadOk is set to 0 by an error
 		if ($uploadOk == 0) {
-		    echo "Sorry, your file was not uploaded.";
+		    // echo "Sorry, your file was not uploaded.";
 		// if everything is ok, try to upload file
 		} else {
 		    if (move_uploaded_file($_FILES[$key]["tmp_name"], $target_file)) {
@@ -71,7 +128,11 @@ class Employees extends CI_Controller {
 		        echo "Sorry, there was an error uploading your file.";
 		    }
 		}
-		return base_url().'file_upload/'.basename($_FILES[$key]["name"]);
+		if (basename($_FILES[$key]["name"])) {
+			return base_url().'file_upload/'.basename($_FILES[$key]["name"]);
+		}else{
+			return "";
+		}
 	}
 }
 
