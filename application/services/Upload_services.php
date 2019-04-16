@@ -12,7 +12,6 @@ class Upload_services
 
 	public function upload_avatar()
 	{
-		echo "aaaaa";
 		$target_dir = "file_upload/";
 		$target_file = $target_dir . basename($_FILES["avatar"]["name"]);
 		$uploadOk = 1;

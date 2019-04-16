@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 // require_once(APPPATH . 'services' . DIRECTORY_SEPARATOR . 'Upload_services.php');
 
-
+include 'UploadHandler.php';
 class Employees extends CI_Controller {
 	// protected $upload_services;
 
@@ -41,7 +41,7 @@ class Employees extends CI_Controller {
 		$phone = $this->input->post('phone');
 		$number_of_order = $this->input->post('number_of_order');
 		$fb_link = $this->input->post('fb_link');
-		$avatar = "https://ae01.alicdn.com/kf/HTB1AbOAOXXXXXcfXFXXq6xXFXXXr/hot-girl-tutu-Rose-Leopard-Dot-Women-Bustier-Crop-Top-Sexy-Clubwear-Spaghetti-Strap-Camouflage-Bustiers.jpg_640x640.jpg";
+		$avatar = $this->input->post('avatar');
 
 		$this->load->model('Employee_model');
 		if ($this->Employee_model->add($avatar, $name, $old, $phone, $number_of_order, $fb_link)) {
@@ -87,6 +87,11 @@ class Employees extends CI_Controller {
 		}else{
 			echo "error roi";
 		}
+	}
+
+	public function upload()
+	{
+		$uploadfile = new UploadHandLer();  
 	}
 
 	public function upload_file($key)

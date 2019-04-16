@@ -2,6 +2,8 @@
 <html lang="en"><head>
 	<title> Example </title>
 	<?php require('bs4header.php') ?>
+	<script type="text/javascript" src="<?php echo base_url(); ?>jqueryupload/js/vendor/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>jqueryupload/js/jquery.fileupload.js"></script>
 </head>
 <body >
 	
@@ -166,7 +168,7 @@
 			<!-- <form method="post" action="Employees/add" enctype="multipart/form-data"> -->
 			  <div class="form-group">
 			    <label for="formGroupExampleInput">Avatar</label>
-			    <input type="file" id='avatar' name ='avatar' class="form-control" id="formGroupExampleInput" placeholder="Avatar">
+			    <input type="file" id='avatar' name ='files[]' class="form-control" id="formGroupExampleInput" placeholder="Avatar">
 			  </div>
 			  <div class="form-group">
 			    <label for="formGroupExampleInput2">Name</label>
@@ -194,6 +196,17 @@
 	</div>
 
 	<script>
+		path = "<?php echo base_url() ?>";
+		$('#avatar').fileupload({
+        url: path + "index.php/Employees/upload",
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                file_path = file.url;
+            });
+        }
+        });
+
 		$(".submit_by_ajax").click(function(event) {
 			$.ajax({
 				//xử lý add data
@@ -201,6 +214,7 @@
 			type: 'POST',
 			dataType: 'json',
 			data: {
+				avatar: file_path,
 				name: $('#name').val(),
 				old: $('#old').val(),
 				phone: $('#phone').val(),
@@ -219,7 +233,7 @@
 				//add thêm form trên giao diên
 				// content = '<div class="card-deck">';
 				content = '<div class="card">';
-				content+= '<img class="card-img-top img-fluid" src="https://ae01.alicdn.com/kf/HTB1AbOAOXXXXXcfXFXXq6xXFXXXr/hot-girl-tutu-Rose-Leopard-Dot-Women-Bustier-Crop-Top-Sexy-Clubwear-Spaghetti-Strap-Camouflage-Bustiers.jpg_640x640.jpg" style="width:320px;height:320px;" alt="Card image cap">';
+				content+= '<img class="card-img-top img-fluid" src="'+file_path+'" alt="Card image cap">';
 				content+= '<div class="card-body">';
 				content+= '<h5 class="card-title">'+$('#name').val()+'</h5>';
 				content+= '<p class="card-text">Old: '+$('#old').val()+'</p>';
